@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Sidemenu from "./Sidemenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +17,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log(children);
   return (
     <html lang="en">
       <body className={`${inter.className} dark:bg-medium`}>
-        <Header/>{children}<Footer/>
-        </body>
+        <Header />
+        <div className="flex">
+          <Sidemenu />
+          <main className="flex-1">{children}</main>
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
