@@ -1,4 +1,5 @@
 "use client"
+import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect } from 'react';
 
 export default function Service() {
@@ -22,21 +23,21 @@ export default function Service() {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="card-stack">
-                <div className="card-container mt-96 h-60 w-80 bg-blue-200 mb-4  p-10">
+                <motion.div className="card-container mt-96 h-60 w-80 bg-blue-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <div className="card">Card 1</div>
-                </div>
-                <div className="card-container h-60 w-80 bg-green-200 mb-4  p-10">
+                </motion.div>
+                <motion.div className="card-container h-60 w-80 bg-green-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <div className="card">Card 2</div>
-                </div>
-                <div className="card-container h-60 w-80 bg-yellow-200 mb-4  p-10">
+                </motion.div>
+                <motion.div className="card-container h-60 w-80 bg-yellow-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <div className="card">Card 3</div>
-                </div>
-                <div className="card-container h-60 w-80 bg-red-200 mb-4  p-10">
+                </motion.div>
+                <motion.div className="card-container h-60 w-80 bg-red-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <div className="card">Card 4</div>
-                </div>
-                <div className="card-container h-60 w-80 bg-purple-200 mb-4 p-10">
+                </motion.div>
+                <motion.div className="card-container h-60 w-80 bg-purple-200 mb-4 p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <div className="card">Card 5</div>
-                </div>
+                </motion.div>
             </div>
         </div>
     );
