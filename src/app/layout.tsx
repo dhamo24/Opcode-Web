@@ -21,9 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} dark:bg-medium`}>
-        <Header />
-          {children}
-        <Footer />
+      <div className="flex flex-col min-h-screen mx-auto pt-8 ">
+          <div className="">
+            <Header />
+            <main className="my-0 py-16">{children}</main>
+          </div>
+          <Footer />
+        </div>
       </body>
     </html>
   );
