@@ -1,44 +1,77 @@
 "use client"
 import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Service() {
-    useEffect(() => {
-        const handleScroll = () => {
-            const cards = document.querySelectorAll('.card-container');
-            const scrollY = window.scrollY || window.pageYOffset;
-            
-            cards.forEach((card, index) => {
-                card.style.transform = `translateY(-${scrollY * (index + 1) * 0.2}px)`;
-            });
-        };
+const Card = ({ bgColor, children }) => {
+  const controls = useAnimation();
+  const [isInitialScroll, setIsInitialScroll] = useState(false);
 
-        window.addEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight) {
+        setIsInitialScroll(true);
+        controls.start({ opacity: 1, y: 0 }); 
+      } else {
+        setIsInitialScroll(false);
+        controls.start({ opacity: 0.8, y: -50 }); 
+      }
+    };
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [controls]);
 
-    return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="card-stack">
-                <motion.div className="card-container mt-96 h-60 w-80 bg-blue-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <div className="card">Card 1</div>
-                </motion.div>
-                <motion.div className="card-container h-60 w-80 bg-green-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <div className="card">Card 2</div>
-                </motion.div>
-                <motion.div className="card-container h-60 w-80 bg-yellow-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <div className="card">Card 3</div>
-                </motion.div>
-                <motion.div className="card-container h-60 w-80 bg-red-200 mb-4  p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <div className="card">Card 4</div>
-                </motion.div>
-                <motion.div className="card-container h-60 w-80 bg-purple-200 mb-4 p-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <div className="card">Card 5</div>
-                </motion.div>
-            </div>
-        </div>
-    );
-}
+  useEffect(() => {
+    if (window.scrollY > window.innerHeight) {
+      setIsInitialScroll(true);
+      controls.start({ opacity: 1, y: 0 }); 
+    }
+  }, [controls]);
+
+  return (
+    <motion.div
+      className="card-container"
+      style={{
+        backgroundColor: bgColor,
+        width: '70vw', 
+        height: '70vh', 
+        margin: 'auto', 
+        opacity: isInitialScroll ? 1 : 0.8, 
+        borderRadius: '20px', 
+        position: 'sticky', 
+        top: '0', 
+      }}
+      initial={{ y: -50 }}
+      animate={controls}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ duration: 0.5 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const Service = () => (
+  <div className="flex justify-center items-center">
+    <div className="card-stack" style={{ height: '300vh' }}>
+      <Card bgColor="blue" key="1">
+        Card 1
+      </Card>
+      <Card bgColor="green" key="2">
+        Card 2
+      </Card>
+      <Card bgColor="yellow" key="3">
+        Card 3
+      </Card>
+      <Card bgColor="red" key="4">
+        Card 4
+      </Card>
+      <Card bgColor="purple" key="5">
+        Card 5
+      </Card>
+    </div>
+  </div>
+);
+
+export default Service;
